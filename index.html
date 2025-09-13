@@ -8,6 +8,27 @@
   
   <!-- Bootstrap Icons for hamburger menu -->
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" />
+  
+  <style>
+    /* Anti-glitch CSS */
+    #main-content {
+      transition: opacity 0.3s ease;
+      min-height: 400px;
+    }
+    
+    .loading-state {
+      opacity: 0.5;
+      pointer-events: none;
+    }
+    
+    .fade-out {
+      opacity: 0;
+    }
+    
+    .fade-in {
+      opacity: 1;
+    }
+  </style>
 </head>
 <body>
   <nav>
@@ -18,7 +39,7 @@
     
     <!-- Navigation menu -->
     <ul class="nav-menu" id="nav-menu">
-      <li><a href="/" data-page="about.html" class="nav-link active">About</a></li>
+      <li><a href="#" data-page="about.html" class="nav-link active">About</a></li>
       <li><a href="#" data-page="experience.html" class="nav-link">Experience</a></li>
       <li><a href="#" data-page="projects.html" class="nav-link">Projects</a></li>
       <li><a href="#" data-page="skills.html" class="nav-link">Skills</a></li>
@@ -29,9 +50,8 @@
     </ul>
   </nav>
   
-  <main id="main-content">
-    <h1>Welcome to Sohel Kureshi's Portfolio</h1>
-    <p>Loading content...</p>
+  <main id="main-content" class="fade-in">
+    <!-- Content will be loaded dynamically -->
   </main>
   
   <footer>
@@ -39,6 +59,10 @@
   </footer>
   
   <script>
+    // Anti-glitch variables
+    let isLoading = false;
+    let currentPage = '';
+    
     // Mobile menu toggle functionality
     const navToggle = document.getElementById('nav-toggle');
     const navMenu = document.getElementById('nav-menu');
@@ -56,30 +80,86 @@
     });
 
     // Page loading functionality
-    const links = document.querySelectorAll('nav a');
+    const links = document.querySelectorAll('nav a.nav-link');
     const mainContent = document.getElementById('main-content');
     
-    // Function to load page content
+    // Smooth page loading function with anti-glitch measures
     function loadPage(page, linkElement) {
-      fetch(page)
-        .then(response => response.text())
-        .then(data => {
-          mainContent.innerHTML = data;
-          window.scrollTo(0, 0);
-          
-          // Update active link
-          links.forEach(link => link.classList.remove('active'));
-          if (linkElement) {
-            linkElement.classList.add('active');
-          }
-          
-          // Close mobile menu after selection
-          navMenu.classList.remove('show-menu');
-          document.querySelector('#nav-toggle i').className = 'bi bi-list';
-        })
-        .catch(() => {
-          mainContent.innerHTML = '<p>Sorry, the content could not be loaded.</p>';
-        });
+      // Prevent multiple simultaneous requests
+      if (isLoading || currentPage === page) {
+        return;
+      }
+      
+      isLoading = true;
+      currentPage = page;
+      
+      // Add loading state
+      mainContent.classList.add('loading-state');
+      
+      // Fade out current content
+      mainContent.classList.remove('fade-in');
+      mainContent.classList.add('fade-out');
+      
+      // Wait for fade-out transition, then load new content
+      setTimeout(() => {
+        fetch(page)
+          .then(response => {
+            if (!response.ok) throw new Error('Page not found');
+            return response.text();
+          })
+          .then(data => {
+            // Replace content
+            mainContent.innerHTML = data;
+            window.scrollTo(0, 0);
+            
+            // Update active link
+            links.forEach(link => link.classList.remove('active'));
+            if (linkElement) {
+              linkElement.classList.add('active');
+            }
+            
+            // Close mobile menu after selection
+            navMenu.classList.remove('show-menu');
+            if (navToggle.querySelector('i')) {
+              navToggle.querySelector('i').className = 'bi bi-list';
+            }
+            
+            // Fade in new content
+            mainContent.classList.remove('fade-out', 'loading-state');
+            mainContent.classList.add('fade-in');
+            
+            // Re-attach event listeners to dynamically loaded content
+            attachDynamicEventListeners();
+            
+            // Reset loading state
+            isLoading = false;
+          })
+          .catch(() => {
+            mainContent.innerHTML = '<p>Sorry, the content could not be loaded.</p>';
+            mainContent.classList.remove('fade-out', 'loading-state');
+            mainContent.classList.add('fade-in');
+            isLoading = false;
+            currentPage = '';
+          });
+      }, 150); // Wait for fade-out transition
+    }
+    
+    // Function to attach event listeners to dynamically loaded content
+    function attachDynamicEventListeners() {
+      const dynamicLinks = document.querySelectorAll('[data-page]');
+      dynamicLinks.forEach(link => {
+        link.removeEventListener('click', handleDynamicClick); // Prevent duplicate listeners
+        link.addEventListener('click', handleDynamicClick);
+      });
+    }
+    
+    // Handle clicks on dynamically loaded content
+    function handleDynamicClick(e) {
+      e.preventDefault();
+      const page = this.getAttribute('data-page');
+      if (page && !isLoading) {
+        loadPage(page, null); // Don't update nav active state for internal links
+      }
     }
     
     // Add click event listeners to navigation links
@@ -87,23 +167,55 @@
       link.addEventListener('click', e => {
         e.preventDefault();
         const page = link.getAttribute('data-page');
-        loadPage(page, link);
+        if (page && !isLoading) {
+          loadPage(page, link);
+        }
       });
     });
     
-    // Load about.html as default page on page load
+    // Load about.html immediately as default page
     window.addEventListener('DOMContentLoaded', () => {
       const aboutLink = document.querySelector('a[data-page="about.html"]');
-      loadPage('about.html', aboutLink);
+      // Set initial state without fade effects for first load
+      isLoading = true;
+      currentPage = 'about.html';
+      
+      fetch('about.html')
+        .then(response => {
+          if (!response.ok) throw new Error('Page not found');
+          return response.text();
+        })
+        .then(data => {
+          mainContent.innerHTML = data;
+          aboutLink.classList.add('active');
+          attachDynamicEventListeners();
+          isLoading = false;
+        })
+        .catch(() => {
+          mainContent.innerHTML = '<p>Welcome! Please navigate using the menu above.</p>';
+          isLoading = false;
+          currentPage = '';
+        });
     });
     
     // Close mobile menu when clicking outside
     document.addEventListener('click', (e) => {
       if (!navToggle.contains(e.target) && !navMenu.contains(e.target)) {
         navMenu.classList.remove('show-menu');
-        document.querySelector('#nav-toggle i').className = 'bi bi-list';
+        if (navToggle.querySelector('i')) {
+          navToggle.querySelector('i').className = 'bi bi-list';
+        }
       }
     });
+    
+    // Prevent rapid clicking
+    document.addEventListener('click', (e) => {
+      if (isLoading && e.target.hasAttribute('data-page')) {
+        e.preventDefault();
+        e.stopPropagation();
+        return false;
+      }
+    }, true);
   </script>
 </body>
 </html>
