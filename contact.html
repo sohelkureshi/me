@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Contact | Sohel Kureshi</title>
+  <link rel="stylesheet" href="css/base.css" />
+  <link rel="stylesheet" href="css/contact.css" />
+  
+  <!-- Bootstrap Icons -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" />
+</head>
+
+<body>
+  <main id="main-content">
+    <section id="contact">
+      <div class="contact-header">
+        <h2>Get In Touch</h2>
+        <p class="contact-subtitle">Let's collaborate and build something amazing together</p>
+      </div>
+
+      <div class="contact-container">
+        
+        <!-- Contact Methods -->
+        <div class="contact-methods">
+          <h3>Connect With Me</h3>
+          
+          <div class="contact-cards">
+            <div class="contact-card email" tabindex="0">
+              <div class="contact-icon">
+                <i class="bi bi-envelope-fill"></i>
+              </div>
+              <div class="contact-info">
+                <h4>Email</h4>
+                <p>Drop me a line anytime</p>
+                <a href="mailto:sohelkureshi138@gmail.com" class="contact-link">
+                  sohelkureshi138@gmail.com
+                </a>
+              </div>
+            </div>
+
+            <div class="contact-card linkedin" tabindex="0">
+              <div class="contact-icon">
+                <i class="bi bi-linkedin"></i>
+              </div>
+              <div class="contact-info">
+                <h4>LinkedIn</h4>
+                <p>Let's connect professionally</p>
+                <a href="https://www.linkedin.com/in/sohel-kureshi-88ab74270/" target="_blank" class="contact-link">
+                  View LinkedIn Profile
+                </a>
+              </div>
+            </div>
+
+            <div class="contact-card github" tabindex="0">
+              <div class="contact-icon">
+                <i class="bi bi-github"></i>
+              </div>
+              <div class="contact-info">
+                <h4>GitHub</h4>
+                <p>Explore my code repositories</p>
+                <a href="https://github.com/sohelkureshi" target="_blank" class="contact-link">
+                  Visit GitHub Profile
+                </a>
+              </div>
+            </div>
+          </div>
+
+          <!-- Quick Stats -->
+          <div class="response-promise">
+            <div class="promise-item">
+              <i class="bi bi-clock-fill"></i>
+              <span>24 Hour Response Time</span>
+            </div>
+            <div class="promise-item">
+              <i class="bi bi-chat-dots-fill"></i>
+              <span>Open to Opportunities</span>
+            </div>
+            <div class="promise-item">
+              <i class="bi bi-shield-check-fill"></i>
+              <span>Professional Communication</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Contact Form -->
+        <div class="contact-form-section">
+          <h3>Send A Message</h3>
+          <p class="form-description">Have a project in mind? Let's discuss how we can work together.</p>
+          
+          <!-- Replace your form with this Web3Forms version -->
+<form action="https://api.web3forms.com/submit" method="POST" class="modern-form">
+    <input type="hidden" name="access_key" value="74bb48fb-5af2-45f0-b335-c82067247a18">
+    <input type="hidden" name="subject" value="New Portfolio Contact">
+    
+    <div class="form-row">
+        <div class="input-group">
+            <label for="name">Full Name *</label>
+            <div class="input-wrapper">
+                <i class="bi bi-person-fill"></i>
+                <input type="text" name="name" placeholder="Enter your full name" required minlength="5">
+            </div>
+        </div>
+        
+        <div class="input-group">
+            <label for="email">Email Address *</label>
+            <div class="input-wrapper">
+                <i class="bi bi-envelope-fill"></i>
+                <input type="email" name="email" placeholder="your.email@domain.com" required>
+            </div>
+        </div>
+    </div>
+    
+    <div class="input-group">
+        <label for="project_type">Subject *</label>
+        <div class="input-wrapper">
+            <i class="bi bi-tag-fill"></i>
+            <select name="project_type" required>
+                <option value="">Select a subject</option>
+                <option value="Project Collaboration">Project Collaboration</option>
+                <option value="Job Opportunity">Job Opportunity</option>
+                <option value="Freelance Work">Freelance Work</option>
+                <option value="General Inquiry">General Inquiry</option>
+            </select>
+        </div>
+    </div>
+    
+    <div class="input-group">
+        <label for="message">Message *</label>
+        <div class="input-wrapper">
+            <i class="bi bi-chat-text-fill"></i>
+            <textarea name="message" rows="6" placeholder="Tell me about your project..." required minlength="10"></textarea>
+        </div>
+    </div>
+    
+    <div class="form-actions">
+        <button type="submit" class="submit-btn">
+            <i class="bi bi-send-fill"></i>
+            Send Message
+        </button>
+    </div>
+</form>
+
+        </div>
+
+      </div>
+
+      <!-- Additional Contact Info -->
+      <div class="additional-info">
+        <div class="info-card availability">
+          <div class="info-header">
+            <i class="bi bi-calendar-check-fill"></i>
+            <h4>Availability</h4>
+          </div>
+          <p>Currently available for new projects and full-time opportunities</p>
+        </div>
+
+        <div class="info-card location">
+          <div class="info-header">
+            <i class="bi bi-geo-alt-fill"></i>
+            <h4>Location</h4>
+          </div>
+          <p>Maharashtra, India (Open to Remote Work)</p>
+        </div>
+
+        <div class="info-card specialization">
+          <div class="info-header">
+            <i class="bi bi-code-slash"></i>
+            <h4>Specialization</h4>
+          </div>
+          <p>Full-Stack Development, MERN Stack, Web Applications</p>
+        </div>
+      </div>
+
+    </section>
+  </main>
+
+  <!-- Success/Error Modal -->
+  <div id="messageModal" class="modal">
+    <div class="modal-content">
+      <span class="close" id="closeModal">&times;</span>
+      <div id="modalIcon"></div>
+      <h3 id="modalTitle"></h3>
+      <p id="modalMessage"></p>
+      <button id="modalOk" class="modal-btn">OK</button>
+    </div>
+  </div>
+
+
+<script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
+</body>
+</html>

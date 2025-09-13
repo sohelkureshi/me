@@ -1,0 +1,597 @@
+/* Reset and base styles */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  background-color: #fcfcfc;
+  color: #111111;
+  line-height: 1.6;
+}
+
+/* Main container */
+main#main-content {
+  max-width: 1200px;
+  width: 100vw;
+  margin: 0 auto;
+  padding: 3rem 4vw;
+}
+
+/* Education header */
+.education-header {
+  text-align: center;
+  margin-bottom: 4rem;
+}
+
+.education-header h2 {
+  font-size: 3.5rem;
+  font-weight: 900;
+  color: #000000;
+  margin-bottom: 1rem;
+  letter-spacing: -0.02em;
+  position: relative;
+}
+
+.education-header h2::after {
+  content: '';
+  position: absolute;
+  bottom: -15px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 120px;
+  height: 4px;
+  background: linear-gradient(90deg, #000000 0%, #555555 100%);
+  border-radius: 2px;
+}
+
+.education-subtitle {
+  font-size: 1.2rem;
+  color: #666666;
+  font-style: italic;
+  margin-top: 1.5rem;
+  max-width: 600px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+/* Timeline structure */
+.education-timeline {
+  position: relative;
+  max-width: 900px;
+  margin: 0 auto;
+}
+
+.education-timeline::before {
+  content: '';
+  position: absolute;
+  left: 40px;
+  top: 0;
+  bottom: 0;
+  width: 4px;
+  background: linear-gradient(180deg, #000000 0%, #666666 100%);
+  border-radius: 2px;
+}
+
+/* Timeline items */
+.timeline-item {
+  position: relative;
+  padding-left: 100px;
+  margin-bottom: 4rem;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.timeline-item:last-child {
+  margin-bottom: 0;
+}
+
+/* Timeline markers */
+.timeline-marker {
+  position: absolute;
+  left: 0;
+  top: 20px;
+  width: 80px;
+  height: 80px;
+  background: #000000;
+  border: 4px solid #ffffff;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.15);
+  transition: all 0.3s ease;
+  z-index: 10;
+}
+
+.timeline-marker i {
+  color: #ffffff;
+  font-size: 1.8rem;
+}
+
+.timeline-item:hover .timeline-marker,
+.timeline-item:focus-within .timeline-marker {
+  transform: scale(1.1);
+  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.25);
+}
+
+/* Education content cards */
+.education-content {
+  background: #ffffff;
+  border-radius: 20px;
+  padding: 3rem;
+  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.08);
+  border: 1px solid #e8e8e8;
+  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  position: relative;
+  overflow: hidden;
+}
+
+.education-content::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 6px;
+  background: #f0f0f0;
+  transition: background 0.3s ease;
+}
+
+.timeline-item.featured .education-content::before {
+  background: linear-gradient(90deg, #000000 0%, #333333 100%);
+}
+
+.timeline-item:hover .education-content,
+.timeline-item:focus-within .education-content {
+  transform: translateY(-8px);
+  box-shadow: 0 15px 50px rgba(0, 0, 0, 0.15);
+}
+
+/* Institution header */
+.institution-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 2rem;
+  flex-wrap: wrap;
+  gap: 1rem;
+}
+
+.institution-info h3 {
+  font-size: 2rem;
+  font-weight: 800;
+  color: #000000;
+  margin-bottom: 0.5rem;
+  line-height: 1.3;
+}
+
+.location {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  color: #666666;
+  font-size: 1rem;
+  font-weight: 500;
+}
+
+.location i {
+  color: #888888;
+}
+
+/* Degree badges */
+.degree-badge {
+  padding: 0.6rem 1.2rem;
+  border-radius: 25px;
+  font-size: 0.85rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  white-space: nowrap;
+}
+
+.degree-badge.premier {
+  background: #000000;
+  color: #ffffff;
+}
+
+.degree-badge.intermediate {
+  background: #f0f0f0;
+  color: #333333;
+  border: 2px solid #e0e0e0;
+}
+
+.degree-badge.foundation {
+  background: #f8f8f8;
+  color: #555555;
+  border: 1px solid #e8e8e8;
+}
+
+/* Degree details */
+.degree-details {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 2.5rem;
+  flex-wrap: wrap;
+  gap: 2rem;
+}
+
+.degree-info h4 {
+  font-size: 1.4rem;
+  font-weight: 700;
+  color: #000000;
+  margin-bottom: 0.8rem;
+}
+
+.duration {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  color: #666666;
+  font-weight: 600;
+}
+
+.duration i {
+  color: #888888;
+}
+
+/* Performance metrics */
+.performance-metrics {
+  display: flex;
+  align-items: center;
+  gap: 2rem;
+}
+
+.metric-item {
+  text-align: center;
+}
+
+.metric-value {
+  font-size: 2.5rem;
+  font-weight: 900;
+  color: #000000;
+  margin-bottom: 0.3rem;
+}
+
+.metric-label {
+  font-size: 0.85rem;
+  color: #666666;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.grade-indicator {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.5rem 1rem;
+  border-radius: 20px;
+  font-weight: 600;
+  font-size: 0.9rem;
+}
+
+.grade-indicator.excellent {
+  background: #f0f0f0;
+  color: #333333;
+}
+
+.grade-indicator.outstanding {
+  background: #000000;
+  color: #ffffff;
+}
+
+/* Coursework section */
+.coursework-section {
+  margin-bottom: 2rem;
+}
+
+.coursework-section h5 {
+  font-size: 1.2rem;
+  font-weight: 700;
+  color: #000000;
+  margin-bottom: 1rem;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.coursework-section h5 i {
+  color: #333333;
+}
+
+.course-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.8rem;
+}
+
+.course-tag {
+  background: #f8f8f8;
+  color: #333333;
+  padding: 0.6rem 1rem;
+  border-radius: 20px;
+  font-size: 0.9rem;
+  font-weight: 600;
+  border: 1px solid #e8e8e8;
+  transition: all 0.3s ease;
+}
+
+.course-tag.programming:hover {
+  background: #000000;
+  color: #ffffff;
+  transform: translateY(-2px);
+}
+
+.course-tag.systems:hover {
+  background: #333333;
+  color: #ffffff;
+  transform: translateY(-2px);
+}
+
+.course-tag.design:hover {
+  background: #555555;
+  color: #ffffff;
+  transform: translateY(-2px);
+}
+
+/* Achievements */
+.achievements h5 {
+  font-size: 1.2rem;
+  font-weight: 700;
+  color: #000000;
+  margin-bottom: 1rem;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.achievements h5 i {
+  color: #333333;
+}
+
+.achievement-list {
+  list-style: none;
+  padding: 0;
+}
+
+.achievement-list li {
+  padding: 0.6rem 0;
+  padding-left: 1.5rem;
+  position: relative;
+  color: #444444;
+  line-height: 1.6;
+  transition: all 0.3s ease;
+}
+
+.achievement-list li::before {
+  content: '▶';
+  position: absolute;
+  left: 0;
+  color: #666666;
+  font-size: 0.8rem;
+  transition: color 0.3s ease;
+}
+
+.achievement-list li:hover {
+  color: #000000;
+  padding-left: 2rem;
+}
+
+.achievement-list li:hover::before {
+  color: #000000;
+}
+
+/* Subjects focus */
+.subjects-focus h5 {
+  font-size: 1.2rem;
+  font-weight: 700;
+  color: #000000;
+  margin-bottom: 1rem;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.subjects-focus h5 i {
+  color: #333333;
+}
+
+.subject-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.6rem;
+}
+
+.subject-item {
+  background: #f0f0f0;
+  color: #444444;
+  padding: 0.4rem 0.8rem;
+  border-radius: 15px;
+  font-size: 0.85rem;
+  font-weight: 600;
+}
+
+/* Foundation note */
+.foundation-note {
+  background: #f8f8f8;
+  border-left: 4px solid #333333;
+  padding: 1rem 1.5rem;
+  border-radius: 0 8px 8px 0;
+  margin-top: 1.5rem;
+}
+
+.foundation-note p {
+  color: #555555;
+  font-style: italic;
+  display: flex;
+  align-items: center;
+  gap: 0.7rem;
+}
+
+.foundation-note i {
+  color: #666666;
+  font-size: 1.1rem;
+}
+
+/* Education summary */
+.education-summary {
+  background: linear-gradient(135deg, #f8f8f8 0%, #f0f0f0 100%);
+  border-radius: 20px;
+  padding: 3rem;
+  margin-top: 4rem;
+  text-align: center;
+  border: 1px solid #e8e8e8;
+}
+
+.education-summary h3 {
+  font-size: 2rem;
+  font-weight: 800;
+  color: #000000;
+  margin-bottom: 2rem;
+}
+
+.summary-stats {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 2rem;
+}
+
+.stat-card {
+  background: #ffffff;
+  border-radius: 16px;
+  padding: 2rem;
+  display: flex;
+  align-items: center;
+  gap: 1.5rem;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.06);
+  transition: all 0.3s ease;
+}
+
+.stat-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.12);
+}
+
+.stat-icon {
+  width: 60px;
+  height: 60px;
+  background: #000000;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.stat-icon i {
+  color: #ffffff;
+  font-size: 1.5rem;
+}
+
+.stat-content {
+  text-align: left;
+}
+
+.stat-number {
+  font-size: 2rem;
+  font-weight: 900;
+  color: #000000;
+  margin-bottom: 0.3rem;
+}
+
+.stat-label {
+  font-size: 0.9rem;
+  color: #666666;
+  font-weight: 600;
+}
+
+/* Responsive design */
+@media (max-width: 900px) {
+  main#main-content {
+    padding: 2rem 6vw;
+  }
+
+  .education-header h2 {
+    font-size: 2.8rem;
+  }
+
+  .education-timeline::before {
+    left: 30px;
+  }
+
+  .timeline-item {
+    padding-left: 80px;
+  }
+
+  .timeline-marker {
+    width: 60px;
+    height: 60px;
+  }
+
+  .timeline-marker i {
+    font-size: 1.4rem;
+  }
+
+  .institution-header {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .degree-details {
+    flex-direction: column;
+    gap: 1.5rem;
+  }
+
+  .performance-metrics {
+    justify-content: flex-start;
+  }
+
+  .summary-stats {
+    grid-template-columns: 1fr;
+    gap: 1.5rem;
+  }
+}
+
+@media (max-width: 600px) {
+  main#main-content {
+    padding: 1.5rem 8vw;
+  }
+
+  .education-header h2 {
+    font-size: 2.2rem;
+  }
+
+  .education-content {
+    padding: 2rem;
+  }
+
+  .course-tags,
+  .subject-list {
+    justify-content: center;
+  }
+
+  .stat-card {
+    flex-direction: column;
+    text-align: center;
+    gap: 1rem;
+  }
+
+  .stat-content {
+    text-align: center;
+  }
+}
+
+/* Focus accessibility */
+.timeline-item:focus-visible {
+  outline: 3px solid #000000;
+  outline-offset: 4px;
+  border-radius: 8px;
+}
+
+/* Smooth scroll */
+html {
+  scroll-behavior: smooth;
+}

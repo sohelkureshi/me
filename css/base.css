@@ -1,0 +1,226 @@
+/* Reset and base styles */
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+  background-color: #ffffff;
+  color: #222222;
+  line-height: 1.6;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+a {
+  color: #000000;
+  text-decoration: none;
+  transition: color 0.3s ease;
+}
+
+a:hover,
+a:focus {
+  color: #555555;
+  outline: none;
+}
+
+/* Navigation */
+nav {
+  background-color: #111111;
+  padding: 1rem 0;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.15);
+  position: relative;
+}
+
+/* Mobile hamburger toggle */
+.nav-toggle {
+  display: none;
+  background: none;
+  border: none;
+  font-size: 1.8rem;
+  color: #ffffff;
+  cursor: pointer;
+  padding: 0.5rem;
+  position: absolute;
+  top: 50%;
+  right: 1.5rem;
+  transform: translateY(-50%);
+  transition: color 0.3s ease;
+  z-index: 1001;
+}
+
+.nav-toggle:hover {
+  color: #cccccc;
+}
+
+/* Navigation menu */
+.nav-menu {
+  display: flex;
+  justify-content: center;
+  list-style: none;
+  flex-wrap: wrap;
+  transition: all 0.3s ease;
+}
+
+.nav-menu li {
+  margin: 0 1.25rem;
+}
+
+.nav-menu li a {
+  color: #ffffff;
+  font-weight: 600;
+  font-size: 1rem;
+  padding: 0.4rem 0.6rem;
+  border-radius: 4px;
+  transition: background-color 0.3s ease;
+  display: block;
+}
+
+.nav-menu li a:hover,
+.nav-menu li a:focus,
+.nav-menu li a.active {
+  background-color: #333333;
+  color: #ffffff;
+  outline: none;
+}
+
+.nav-menu li a.active {
+  background-color: #555555;
+}
+
+/* Footer */
+footer {
+  background-color: #111111;
+  color: #dddddd;
+  text-align: center;
+  padding: 1.1rem;
+  font-size: 0.95rem;
+  margin-top: auto;
+}
+
+/* Main content area */
+#main-content {
+  flex: 1;
+  padding: 2rem;
+}
+
+/* Responsive design for mobile */
+@media (max-width: 768px) {
+  /* Show hamburger menu */
+  .nav-toggle {
+    display: block;
+  }
+  
+  /* Hide menu by default on mobile */
+  .nav-menu {
+    position: fixed;
+    left: -100%;
+    top: 70px;
+    flex-direction: column;
+    background-color: #111111;
+    width: 100%;
+    text-align: center;
+    transition: 0.3s;
+    box-shadow: 0 10px 27px rgba(0, 0, 0, 0.05);
+    z-index: 1000;
+    padding: 2rem 0;
+  }
+  
+  /* Show menu when active */
+  .nav-menu.show-menu {
+    left: 0;
+  }
+  
+  /* Mobile menu items */
+  .nav-menu li {
+    margin: 0.5rem 0;
+  }
+  
+  .nav-menu li a {
+    padding: 1rem 2rem;
+    font-size: 1.1rem;
+    border-radius: 0;
+    width: 100%;
+    transition: background-color 0.3s ease, padding-left 0.3s ease;
+  }
+  
+  .nav-menu li a:hover,
+  .nav-menu li a:focus {
+    background-color: #333333;
+    padding-left: 3rem;
+  }
+  
+  .nav-menu li a.active {
+    background-color: #555555;
+    border-left: 4px solid #ffffff;
+  }
+  
+  /* Adjust main content padding for mobile */
+  #main-content {
+    padding: 1rem;
+  }
+}
+
+/* Smooth scrolling */
+html {
+  scroll-behavior: smooth;
+}
+
+/* Loading animation for better UX */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+#main-content {
+  animation: fadeIn 0.3s ease;
+}
+
+/* Focus accessibility improvements */
+.nav-toggle:focus,
+.nav-menu a:focus {
+  outline: 2px solid #ffffff;
+  outline-offset: 2px;
+}
+
+/* Prevent body scroll when mobile menu is open */
+body.menu-open {
+  overflow: hidden;
+}
+
+/* Additional mobile optimizations */
+@media (max-width: 480px) {
+  nav {
+    padding: 0.8rem 0;
+  }
+  
+  .nav-toggle {
+    right: 1rem;
+    font-size: 1.6rem;
+  }
+  
+  .nav-menu {
+    top: 60px;
+    padding: 1.5rem 0;
+  }
+  
+  .nav-menu li a {
+    font-size: 1rem;
+    padding: 0.8rem 1.5rem;
+  }
+  
+  footer {
+    padding: 0.8rem;
+    font-size: 0.9rem;
+  }
+}
