@@ -318,14 +318,7 @@ main#main-content {
   font-style: italic;
 }
 
-/* Footer */
-footer {
-  text-align: center;
-  padding: 2rem 0;
-  color: #888888;
-  font-size: 0.9rem;
-  letter-spacing: 0.05em;
-}
+
 
 /* Responsive design */
 @media (max-width: 768px) {
