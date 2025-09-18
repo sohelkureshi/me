@@ -4,31 +4,73 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Sohel Kureshi | Portfolio</title>
-  <link rel="stylesheet" href="css/base.css" />
-  
-  <!-- Bootstrap Icons for hamburger menu -->
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" />
-  
+
+  <!-- Prevent FOUC: hide until CSS+fonts are ready -->
   <style>
-    /* Anti-glitch CSS */
-    #main-content {
-      transition: opacity 0.3s ease;
-      min-height: 400px;
-    }
-    
-    .loading-state {
-      opacity: 0.5;
-      pointer-events: none;
-    }
-    
-    .fade-out {
-      opacity: 0;
-    }
-    
-    .fade-in {
-      opacity: 1;
-    }
+    /* Keep this before any external CSS so it applies immediately */
+    html:not(.css-ready) { visibility: hidden; }
   </style>
+
+  <!-- Resource hints for external icon CSS/fonts -->
+  <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin />
+  <link rel="dns-prefetch" href="https://cdn.jsdelivr.net" />
+
+  <!-- Critical/base CSS: preload + stylesheet (preload fetch is reused by the stylesheet) -->
+  <link rel="preload" href="css/base.css" as="style" />
+  <link rel="stylesheet" href="css/base.css" />
+
+  <!-- All site CSS in head (do NOT link CSS inside fetched fragments) -->
+  <!-- You have 10+ files; list them all here so styles are present before any content is shown -->
+  <link rel="stylesheet" href="css/about.css" />
+  <link rel="stylesheet" href="css/experience.css" />
+  <link rel="stylesheet" href="css/projects.css" />
+  <link rel="stylesheet" href="css/skills.css" />
+  <link rel="stylesheet" href="css/education.css" />
+  <link rel="stylesheet" href="css/services.css" />
+  <link rel="stylesheet" href="css/contact.css" />
+  <link rel="stylesheet" href="css/resume.css" />
+  <!-- Add remaining CSS files here -->
+
+  <!-- Bootstrap Icons CSS (external); keep here so it loads before any icon renders -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" />
+
+  <!-- Optional: minimal transitions used by your loader -->
+  <style>
+    #main-content { transition: opacity 0.3s ease; min-height: 400px; }
+    .loading-state { opacity: 0.5; pointer-events: none; }
+    .fade-out { opacity: 0; }
+    .fade-in { opacity: 1; }
+  </style>
+
+  <!-- Reveal the page only after all stylesheets and fonts are ready -->
+  <script>
+    (function () {
+      function revealWhenStylesReady() {
+        // Wait for stylesheet <link> elements to finish loading
+        const links = Array.from(document.querySelectorAll('link[rel="stylesheet"]'));
+        const linkPromises = links.map(link => new Promise(resolve => {
+          // If the stylesheet is already parsed (sheet exists), resolve immediately
+          if (link.sheet) return resolve();
+          link.addEventListener('load', resolve, { once: true });
+          link.addEventListener('error', resolve, { once: true }); // fail open
+        }));
+        const fontsReady = (document.fonts && document.fonts.ready) ? document.fonts.ready : Promise.resolve();
+        Promise.all([...linkPromises, fontsReady]).then(() => {
+          document.documentElement.classList.add('css-ready');
+        });
+      }
+      if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', revealWhenStylesReady);
+      } else {
+        revealWhenStylesReady();
+      }
+    })();
+  </script>
+
+  <!-- No-JS fallback so the page is visible if JS is disabled -->
+  <noscript>
+    <style>html { visibility: visible; }</style>
+  </noscript>
 </head>
 <body>
   <nav>
@@ -36,7 +78,7 @@
     <div class="nav-toggle" id="nav-toggle">
       <i class="bi bi-list"></i>
     </div>
-    
+
     <!-- Navigation menu -->
     <ul class="nav-menu" id="nav-menu">
       <li><a href="#" data-page="about.html" class="nav-link active">About</a></li>
@@ -49,27 +91,27 @@
       <li><a href="#" data-page="resume.html" class="nav-link">Resume</a></li>
     </ul>
   </nav>
-  
+
   <main id="main-content" class="fade-in">
     <!-- Content will be loaded dynamically -->
   </main>
-  
+
   <footer>
     &copy; 2025 Sohel Kureshi
   </footer>
-  
+
   <script>
     // Anti-glitch variables
     let isLoading = false;
     let currentPage = '';
-    
+
     // Mobile menu toggle functionality
     const navToggle = document.getElementById('nav-toggle');
     const navMenu = document.getElementById('nav-menu');
-    
+
     navToggle.addEventListener('click', () => {
       navMenu.classList.toggle('show-menu');
-      
+
       // Toggle hamburger icon
       const icon = navToggle.querySelector('i');
       if (navMenu.classList.contains('show-menu')) {
@@ -82,24 +124,22 @@
     // Page loading functionality
     const links = document.querySelectorAll('nav a.nav-link');
     const mainContent = document.getElementById('main-content');
-    
+
     // Smooth page loading function with anti-glitch measures
     function loadPage(page, linkElement) {
       // Prevent multiple simultaneous requests
-      if (isLoading || currentPage === page) {
-        return;
-      }
-      
+      if (isLoading || currentPage === page) return;
+
       isLoading = true;
       currentPage = page;
-      
+
       // Add loading state
       mainContent.classList.add('loading-state');
-      
+
       // Fade out current content
       mainContent.classList.remove('fade-in');
       mainContent.classList.add('fade-out');
-      
+
       // Wait for fade-out transition, then load new content
       setTimeout(() => {
         fetch(page)
@@ -111,26 +151,24 @@
             // Replace content
             mainContent.innerHTML = data;
             window.scrollTo(0, 0);
-            
+
             // Update active link
             links.forEach(link => link.classList.remove('active'));
-            if (linkElement) {
-              linkElement.classList.add('active');
-            }
-            
+            if (linkElement) linkElement.classList.add('active');
+
             // Close mobile menu after selection
             navMenu.classList.remove('show-menu');
             if (navToggle.querySelector('i')) {
               navToggle.querySelector('i').className = 'bi bi-list';
             }
-            
+
             // Fade in new content
             mainContent.classList.remove('fade-out', 'loading-state');
             mainContent.classList.add('fade-in');
-            
+
             // Re-attach event listeners to dynamically loaded content
             attachDynamicEventListeners();
-            
+
             // Reset loading state
             isLoading = false;
           })
@@ -143,7 +181,7 @@
           });
       }, 150); // Wait for fade-out transition
     }
-    
+
     // Function to attach event listeners to dynamically loaded content
     function attachDynamicEventListeners() {
       const dynamicLinks = document.querySelectorAll('[data-page]');
@@ -152,7 +190,7 @@
         link.addEventListener('click', handleDynamicClick);
       });
     }
-    
+
     // Handle clicks on dynamically loaded content
     function handleDynamicClick(e) {
       e.preventDefault();
@@ -161,7 +199,7 @@
         loadPage(page, null); // Don't update nav active state for internal links
       }
     }
-    
+
     // Add click event listeners to navigation links
     links.forEach(link => {
       link.addEventListener('click', e => {
@@ -172,14 +210,14 @@
         }
       });
     });
-    
+
     // Load about.html immediately as default page
     window.addEventListener('DOMContentLoaded', () => {
       const aboutLink = document.querySelector('a[data-page="about.html"]');
       // Set initial state without fade effects for first load
       isLoading = true;
       currentPage = 'about.html';
-      
+
       fetch('about.html')
         .then(response => {
           if (!response.ok) throw new Error('Page not found');
@@ -197,7 +235,7 @@
           currentPage = '';
         });
     });
-    
+
     // Close mobile menu when clicking outside
     document.addEventListener('click', (e) => {
       if (!navToggle.contains(e.target) && !navMenu.contains(e.target)) {
@@ -207,7 +245,7 @@
         }
       }
     });
-    
+
     // Prevent rapid clicking
     document.addEventListener('click', (e) => {
       if (isLoading && e.target.hasAttribute('data-page')) {
