@@ -12,55 +12,22 @@ body {
   line-height: 1.6;
 }
 
-/* Main container - Full width responsive like about.css */
+/* Main container */
 main#main-content {
-  width: 100%;
-  padding: 2.5rem 0;
-  color: #111111;
-  box-sizing: border-box;
-  scroll-margin-top: 80px;
-}
-
-/* Add inline padding on smaller viewports */
-@media (max-width: 900px) {
-  main#main-content {
-    padding-inline: 3vw;
-  }
-}
-
-@media (max-width: 600px) {
-  main#main-content {
-    padding-inline: 5vw;
-  }
+  max-width: 1000px;
+  width: 100vw;
+  margin: 0 auto;
+  padding: 3rem 4vw;
 }
 
 /* Section header */
 #experience h2 {
-  color: #000000;
-  font-weight: 900;
   font-size: 3.2rem;
+  font-weight: 900;
+  color: #000000;
   text-align: center;
   margin-bottom: 0.5rem;
   letter-spacing: -0.02em;
-  user-select: none;
-  cursor: default;
-  transition: color 0.3s ease;
-  position: relative;
-}
-
-#experience h2::after {
-  content: '';
-  display: block;
-  width: 80px;
-  height: 4px;
-  background-color: #333333;
-  margin: 1rem auto;
-  border-radius: 2px;
-}
-
-#experience h2:hover,
-#experience h2:focus-within {
-  color: #444444;
 }
 
 .section-subtitle {
@@ -75,8 +42,6 @@ main#main-content {
 .timeline {
   position: relative;
   padding: 2rem 0;
-  max-width: 1000px;
-  margin: 0 auto;
 }
 
 .timeline::before {
@@ -353,46 +318,16 @@ main#main-content {
   font-style: italic;
 }
 
-/* Responsive design - Following about.css pattern */
-@media (max-width: 900px) {
-  #experience h2 {
-    font-size: clamp(2.2rem, 5vw, 3.2rem);
+
+
+/* Responsive design */
+@media (max-width: 768px) {
+  main#main-content {
+    padding: 2rem 6vw;
   }
 
-  .timeline::before {
-    left: 25px;
-  }
-
-  .experience-item {
-    padding-left: 70px;
-  }
-
-  .timeline-marker {
-    width: 50px;
-    height: 50px;
-  }
-
-  .timeline-marker i {
-    font-size: 1.1rem;
-  }
-
-  .experience-card {
-    padding: 2rem;
-  }
-
-  .highlights {
-    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
-  }
-}
-
-@media (max-width: 600px) {
   #experience h2 {
     font-size: 2.5rem;
-  }
-
-  .section-subtitle {
-    font-size: 1rem;
-    margin-bottom: 2rem;
   }
 
   .timeline::before {
@@ -401,20 +336,16 @@ main#main-content {
 
   .experience-item {
     padding-left: 60px;
-    margin-bottom: 2.5rem;
   }
 
   .timeline-marker {
     width: 40px;
     height: 40px;
+    left: 0;
   }
 
   .timeline-marker i {
     font-size: 1rem;
-  }
-
-  .experience-card {
-    padding: 1.5rem;
   }
 
   .experience-header {
@@ -428,29 +359,20 @@ main#main-content {
 
   .highlights {
     grid-template-columns: 1fr;
-    gap: 0.8rem;
+  }
+}
+
+@media (max-width: 480px) {
+  main#main-content {
+    padding: 1.5rem 8vw;
   }
 
-  .highlight-item {
-    padding: 0.8rem;
-  }
-
-  .company-info h3 {
-    font-size: 1.5rem;
-  }
-
-  .achievements h4,
-  .tech-stack h4 {
-    font-size: 1.1rem;
+  .experience-card {
+    padding: 1.5rem;
   }
 
   .tech-tags {
-    gap: 0.5rem;
-  }
-
-  .tech-tag {
-    padding: 0.4rem 0.8rem;
-    font-size: 0.85rem;
+    justify-content: center;
   }
 }
 
@@ -459,9 +381,4 @@ main#main-content {
   outline: 3px solid #000000;
   outline-offset: 4px;
   border-radius: 8px;
-}
-
-.timeline-marker:focus-visible {
-  outline: 3px solid #000000;
-  outline-offset: 4px;
 }

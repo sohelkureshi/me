@@ -12,21 +12,12 @@ body {
   line-height: 1.6;
 }
 
-/* Main container — like about.css */
+/* Main container */
 main#main-content {
-  width: 100%;
-  padding: 2.5rem 0;           /* remove desktop inline gutters to use full width */
-  color: #111111;
-  box-sizing: border-box;
-  scroll-margin-top: 80px;
-}
-
-/* Add small inline padding back on smaller viewports */
-@media (max-width: 900px) {
-  main#main-content { padding-inline: 3vw; } /* logical padding for LTR/RTL */
-}
-@media (max-width: 600px) {
-  main#main-content { padding-inline: 5vw; }
+  max-width: 1200px;
+  width: 100vw;
+  margin: 0 auto;
+  padding: 3rem 4vw;
 }
 
 /* Education header */
@@ -36,31 +27,25 @@ main#main-content {
 }
 
 .education-header h2 {
-  color: #000000;
+  font-size: 3.5rem;
   font-weight: 900;
-  font-size: 3.2rem;           /* aligned with about.css */
+  color: #000000;
   margin-bottom: 1rem;
   letter-spacing: -0.02em;
   position: relative;
-  user-select: none;
-  cursor: default;
-  transition: color 0.3s ease;
 }
 
 .education-header h2::after {
   content: '';
   position: absolute;
-  bottom: -12px;
+  bottom: -15px;
   left: 50%;
   transform: translateX(-50%);
-  width: 80px;                 /* underline width aligned with about.css */
+  width: 120px;
   height: 4px;
-  background: linear-gradient(90deg, #000000 0%, #333333 100%);
+  background: linear-gradient(90deg, #000000 0%, #555555 100%);
   border-radius: 2px;
 }
-
-.education-header h2:hover,
-.education-header h2:focus-within { color: #444444; }
 
 .education-subtitle {
   font-size: 1.2rem;
@@ -75,9 +60,8 @@ main#main-content {
 /* Timeline structure */
 .education-timeline {
   position: relative;
-  max-width: 1000px;
+  max-width: 900px;
   margin: 0 auto;
-  padding-block: 0; /* ensure no extra block padding */
 }
 
 .education-timeline::before {
@@ -94,18 +78,20 @@ main#main-content {
 /* Timeline items */
 .timeline-item {
   position: relative;
-  padding-left: 110px;
-  margin-bottom: 3.5rem;
+  padding-left: 100px;
+  margin-bottom: 4rem;
   transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
-.timeline-item:last-child { margin-bottom: 0; }
+.timeline-item:last-child {
+  margin-bottom: 0;
+}
 
 /* Timeline markers */
 .timeline-marker {
   position: absolute;
   left: 0;
-  top: 16px;
+  top: 20px;
   width: 80px;
   height: 80px;
   background: #000000;
@@ -134,7 +120,7 @@ main#main-content {
 .education-content {
   background: #ffffff;
   border-radius: 20px;
-  padding: clamp(1.5rem, 3vw, 3rem);
+  padding: 3rem;
   box-shadow: 0 8px 30px rgba(0, 0, 0, 0.08);
   border: 1px solid #e8e8e8;
   transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
@@ -145,8 +131,9 @@ main#main-content {
 .education-content::before {
   content: '';
   position: absolute;
-  inset-inline: 0;
   top: 0;
+  left: 0;
+  width: 100%;
   height: 6px;
   background: #f0f0f0;
   transition: background 0.3s ease;
@@ -173,7 +160,7 @@ main#main-content {
 }
 
 .institution-info h3 {
-  font-size: clamp(1.4rem, 2.5vw, 2rem);
+  font-size: 2rem;
   font-weight: 800;
   color: #000000;
   margin-bottom: 0.5rem;
@@ -189,7 +176,9 @@ main#main-content {
   font-weight: 500;
 }
 
-.location i { color: #888888; }
+.location i {
+  color: #888888;
+}
 
 /* Degree badges */
 .degree-badge {
@@ -202,18 +191,31 @@ main#main-content {
   white-space: nowrap;
 }
 
-.degree-badge.premier       { background: #000000; color: #ffffff; }
-.degree-badge.intermediate  { background: #f0f0f0; color: #333333; border: 2px solid #e0e0e0; }
-.degree-badge.foundation    { background: #f8f8f8; color: #555555; border: 1px solid #e8e8e8; }
+.degree-badge.premier {
+  background: #000000;
+  color: #ffffff;
+}
+
+.degree-badge.intermediate {
+  background: #f0f0f0;
+  color: #333333;
+  border: 2px solid #e0e0e0;
+}
+
+.degree-badge.foundation {
+  background: #f8f8f8;
+  color: #555555;
+  border: 1px solid #e8e8e8;
+}
 
 /* Degree details */
 .degree-details {
   display: flex;
   justify-content: space-between;
   align-items: flex-start;
-  margin-bottom: 2.2rem;
+  margin-bottom: 2.5rem;
   flex-wrap: wrap;
-  gap: 1.5rem;
+  gap: 2rem;
 }
 
 .degree-info h4 {
@@ -231,20 +233,23 @@ main#main-content {
   font-weight: 600;
 }
 
-.duration i { color: #888888; }
+.duration i {
+  color: #888888;
+}
 
 /* Performance metrics */
 .performance-metrics {
   display: flex;
   align-items: center;
-  gap: clamp(1rem, 3vw, 2rem);
-  flex-wrap: wrap;
+  gap: 2rem;
 }
 
-.metric-item { text-align: center; }
+.metric-item {
+  text-align: center;
+}
 
 .metric-value {
-  font-size: clamp(1.6rem, 3vw, 2.5rem);
+  font-size: 2.5rem;
   font-weight: 900;
   color: #000000;
   margin-bottom: 0.3rem;
@@ -268,11 +273,20 @@ main#main-content {
   font-size: 0.9rem;
 }
 
-.grade-indicator.excellent  { background: #f0f0f0; color: #333333; }
-.grade-indicator.outstanding{ background: #000000; color: #ffffff; }
+.grade-indicator.excellent {
+  background: #f0f0f0;
+  color: #333333;
+}
+
+.grade-indicator.outstanding {
+  background: #000000;
+  color: #ffffff;
+}
 
 /* Coursework section */
-.coursework-section { margin-bottom: 2rem; }
+.coursework-section {
+  margin-bottom: 2rem;
+}
 
 .coursework-section h5 {
   font-size: 1.2rem;
@@ -284,7 +298,9 @@ main#main-content {
   gap: 0.5rem;
 }
 
-.coursework-section h5 i { color: #333333; }
+.coursework-section h5 i {
+  color: #333333;
+}
 
 .course-tags {
   display: flex;
@@ -303,9 +319,23 @@ main#main-content {
   transition: all 0.3s ease;
 }
 
-.course-tag.programming:hover { background: #000000; color: #ffffff; transform: translateY(-2px); }
-.course-tag.systems:hover     { background: #333333; color: #ffffff; transform: translateY(-2px); }
-.course-tag.design:hover      { background: #555555; color: #ffffff; transform: translateY(-2px); }
+.course-tag.programming:hover {
+  background: #000000;
+  color: #ffffff;
+  transform: translateY(-2px);
+}
+
+.course-tag.systems:hover {
+  background: #333333;
+  color: #ffffff;
+  transform: translateY(-2px);
+}
+
+.course-tag.design:hover {
+  background: #555555;
+  color: #ffffff;
+  transform: translateY(-2px);
+}
 
 /* Achievements */
 .achievements h5 {
@@ -318,7 +348,9 @@ main#main-content {
   gap: 0.5rem;
 }
 
-.achievements h5 i { color: #333333; }
+.achievements h5 i {
+  color: #333333;
+}
 
 .achievement-list {
   list-style: none;
@@ -343,8 +375,14 @@ main#main-content {
   transition: color 0.3s ease;
 }
 
-.achievement-list li:hover { color: #000000; padding-left: 2rem; }
-.achievement-list li:hover::before { color: #000000; }
+.achievement-list li:hover {
+  color: #000000;
+  padding-left: 2rem;
+}
+
+.achievement-list li:hover::before {
+  color: #000000;
+}
 
 /* Subjects focus */
 .subjects-focus h5 {
@@ -357,7 +395,9 @@ main#main-content {
   gap: 0.5rem;
 }
 
-.subjects-focus h5 i { color: #333333; }
+.subjects-focus h5 i {
+  color: #333333;
+}
 
 .subject-list {
   display: flex;
@@ -400,14 +440,14 @@ main#main-content {
 .education-summary {
   background: linear-gradient(135deg, #f8f8f8 0%, #f0f0f0 100%);
   border-radius: 20px;
-  padding: clamp(1.5rem, 4vw, 3rem);
+  padding: 3rem;
   margin-top: 4rem;
   text-align: center;
   border: 1px solid #e8e8e8;
 }
 
 .education-summary h3 {
-  font-size: clamp(1.4rem, 2.5vw, 2rem);
+  font-size: 2rem;
   font-weight: 800;
   color: #000000;
   margin-bottom: 2rem;
@@ -415,8 +455,8 @@ main#main-content {
 
 .summary-stats {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); /* intrinsic grid */
-  gap: clamp(1rem, 2.5vw, 2rem);
+  grid-template-columns: repeat(3, 1fr);
+  gap: 2rem;
 }
 
 .stat-card {
@@ -446,9 +486,14 @@ main#main-content {
   flex-shrink: 0;
 }
 
-.stat-icon i { color: #ffffff; font-size: 1.5rem; }
+.stat-icon i {
+  color: #ffffff;
+  font-size: 1.5rem;
+}
 
-.stat-content { text-align: left; }
+.stat-content {
+  text-align: left;
+}
 
 .stat-number {
   font-size: 2rem;
@@ -463,34 +508,80 @@ main#main-content {
   font-weight: 600;
 }
 
-/* Responsive design — unify breakpoints with about.css */
+/* Responsive design */
 @media (max-width: 900px) {
-  .education-header h2 { font-size: clamp(2.2rem, 5vw, 3.2rem); } /* fluid type */
-  .education-timeline::before { left: 30px; }
-  .timeline-item { padding-left: 90px; }
-  .timeline-marker { width: 70px; height: 70px; }
-  .timeline-marker i { font-size: 1.5rem; }
-  .institution-header { flex-direction: column; align-items: flex-start; }
-  .degree-details { flex-direction: column; gap: 1.25rem; }
-  .performance-metrics { justify-content: flex-start; }
+  main#main-content {
+    padding: 2rem 6vw;
+  }
+
+  .education-header h2 {
+    font-size: 2.8rem;
+  }
+
+  .education-timeline::before {
+    left: 30px;
+  }
+
+  .timeline-item {
+    padding-left: 80px;
+  }
+
+  .timeline-marker {
+    width: 60px;
+    height: 60px;
+  }
+
+  .timeline-marker i {
+    font-size: 1.4rem;
+  }
+
+  .institution-header {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .degree-details {
+    flex-direction: column;
+    gap: 1.5rem;
+  }
+
+  .performance-metrics {
+    justify-content: flex-start;
+  }
+
+  .summary-stats {
+    grid-template-columns: 1fr;
+    gap: 1.5rem;
+  }
 }
 
 @media (max-width: 600px) {
-  .education-header h2 { font-size: 2.5rem; }
+  main#main-content {
+    padding: 1.5rem 8vw;
+  }
 
-  .education-content { padding: 1.5rem; }
+  .education-header h2 {
+    font-size: 2.2rem;
+  }
 
-  .education-timeline::before { left: 24px; }
-  .timeline-item { padding-left: 72px; margin-bottom: 3rem; }
-  .timeline-marker { width: 52px; height: 52px; top: 12px; }
-  .timeline-marker i { font-size: 1.2rem; }
+  .education-content {
+    padding: 2rem;
+  }
 
-  .course-tags, .subject-list { justify-content: center; }
+  .course-tags,
+  .subject-list {
+    justify-content: center;
+  }
 
-  .summary-stats { grid-template-columns: 1fr; gap: 1.25rem; }
+  .stat-card {
+    flex-direction: column;
+    text-align: center;
+    gap: 1rem;
+  }
 
-  .stat-card { flex-direction: column; text-align: center; gap: 1rem; }
-  .stat-content { text-align: center; }
+  .stat-content {
+    text-align: center;
+  }
 }
 
 /* Focus accessibility */
@@ -501,6 +592,6 @@ main#main-content {
 }
 
 /* Smooth scroll */
-html { scroll-behavior: smooth; }
-
-
+html {
+  scroll-behavior: smooth;
+}
