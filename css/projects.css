@@ -12,12 +12,21 @@ body {
   line-height: 1.6;
 }
 
-/* Main container */
+/* Main container — full width like about.css */
 main#main-content {
-  max-width: 1400px;
-  width: 100vw;
-  margin: 0 auto;
-  padding: 3rem 4vw;
+  width: 100%;
+  padding: 2.5rem 0;            /* remove desktop inline gutters to use full width */
+  color: #111111;
+  box-sizing: border-box;
+  scroll-margin-top: 80px;
+}
+
+/* Add small inline padding back on smaller viewports */
+@media (max-width: 900px) {
+  main#main-content { padding-inline: 3vw; }
+}
+@media (max-width: 600px) {
+  main#main-content { padding-inline: 5vw; }
 }
 
 /* Section header */
@@ -27,12 +36,15 @@ main#main-content {
 }
 
 .section-header h2 {
-  font-size: 3.5rem;
-  font-weight: 900;
   color: #000000;
+  font-weight: 900;
+  font-size: 3.2rem;
   margin-bottom: 0.8rem;
   letter-spacing: -0.02em;
   position: relative;
+  user-select: none;
+  cursor: default;
+  transition: color 0.3s ease;
 }
 
 .section-header h2::after {
@@ -43,9 +55,12 @@ main#main-content {
   transform: translateX(-50%);
   width: 100px;
   height: 4px;
-  background: linear-gradient(90deg, #000000 0%, #555555 100%);
+  background: linear-gradient(90deg, #000000 0%, #333333 100%);
   border-radius: 2px;
 }
+
+.section-header h2:hover,
+.section-header h2:focus-within { color: #444444; }
 
 .section-subtitle {
   font-size: 1.3rem;
@@ -59,17 +74,19 @@ main#main-content {
 .projects-showcase {
   display: flex;
   flex-direction: column;
-  gap: 4rem;
+  gap: clamp(2rem, 3vw, 4rem);
+  max-width: 1200px;
+  margin: 0 auto;
 }
 
 /* Featured project */
 .featured-project {
   display: grid;
   grid-template-columns: 1fr 1fr;
-  gap: 3rem;
+  gap: clamp(1.5rem, 2.5vw, 3rem);
   background: #ffffff;
   border-radius: 20px;
-  padding: 3rem;
+  padding: clamp(1.5rem, 3vw, 3rem);
   box-shadow: 0 10px 40px rgba(0, 0, 0, 0.08);
   border: 1px solid #e8e8e8;
   transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
@@ -109,10 +126,7 @@ main#main-content {
 
 .image-overlay {
   position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
+  inset: 0;
   background: rgba(0, 0, 0, 0.7);
   display: flex;
   align-items: center;
@@ -138,13 +152,8 @@ main#main-content {
   letter-spacing: 0.1em;
 }
 
-.featured-project:hover .image-overlay {
-  opacity: 1;
-}
-
-.featured-project:hover .project-image-container img {
-  transform: scale(1.05);
-}
+.featured-project:hover .image-overlay { opacity: 1; }
+.featured-project:hover .project-image-container img { transform: scale(1.05); }
 
 /* Featured project content */
 .project-content {
@@ -161,7 +170,7 @@ main#main-content {
 }
 
 .project-header h3 {
-  font-size: 2.2rem;
+  font-size: clamp(1.6rem, 2.5vw, 2.2rem);
   font-weight: 800;
   color: #000000;
   margin: 0;
@@ -188,7 +197,7 @@ main#main-content {
 /* Tech stack */
 .tech-stack {
   display: flex;
-  flex-wrap: wrap;
+  flex-wrap: wrap;                /* allow wrapping */
   gap: 0.8rem;
   margin-bottom: 2.5rem;
 }
@@ -216,6 +225,7 @@ main#main-content {
 .project-actions {
   display: flex;
   gap: 1rem;
+  flex-wrap: wrap;
 }
 
 .btn-primary, .btn-secondary {
@@ -251,10 +261,10 @@ main#main-content {
   color: white;
 }
 
-/* Regular projects grid */
+/* Regular projects grid — intrinsically responsive */
 .projects-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
   gap: 2rem;
 }
 
@@ -275,9 +285,7 @@ main#main-content {
 }
 
 /* Card header */
-.card-header {
-  position: relative;
-}
+.card-header { position: relative; }
 
 .project-image-wrapper {
   position: relative;
@@ -292,15 +300,12 @@ main#main-content {
   transition: transform 0.3s ease;
 }
 
-.project-card:hover .project-image-wrapper img {
-  transform: scale(1.1);
-}
+.project-card:hover .project-image-wrapper img { transform: scale(1.1); }
 
 .image-gradient {
   position: absolute;
+  inset-inline: 0;
   bottom: 0;
-  left: 0;
-  width: 100%;
   height: 50%;
   background: linear-gradient(transparent, rgba(0, 0, 0, 0.6));
 }
@@ -367,6 +372,7 @@ main#main-content {
   padding: 0 2rem 2rem;
   display: flex;
   gap: 1rem;
+  flex-wrap: wrap;
 }
 
 .card-footer a {
@@ -392,13 +398,13 @@ main#main-content {
 .cta-section {
   background: linear-gradient(135deg, #f8f8f8 0%, #f0f0f0 100%);
   border-radius: 20px;
-  padding: 4rem 2rem;
+  padding: clamp(2rem, 4vw, 4rem);
   text-align: center;
   border: 1px solid #e8e8e8;
 }
 
 .cta-content h3 {
-  font-size: 2rem;
+  font-size: clamp(1.4rem, 2.5vw, 2rem);
   font-weight: 800;
   color: #000000;
   margin-bottom: 1rem;
@@ -433,53 +439,89 @@ main#main-content {
   box-shadow: 0 8px 25px rgba(0, 0, 0, 0.2);
 }
 
-/* Responsive design */
-@media (max-width: 1024px) {
+/* Responsive design — unify breakpoints with about.css */
+@media (max-width: 900px) {
+  .section-header h2 { font-size: clamp(2.2rem, 5vw, 3.2rem); }
   .featured-project {
-    grid-template-columns: 1fr;
+    grid-template-columns: 1fr; 
     gap: 2rem;
     text-align: center;
   }
-  
+  .project-header { justify-content: center; }
+  .project-actions { justify-content: center; }
+}
+
+/* Mobile alignment fixes for Featured Project */
+@media (max-width: 600px) {
+  .section-header h2 { font-size: 2.5rem; }
+
+  /* Force true single-column and centered content inside the featured project */
+  .featured-project {
+    grid-template-columns: 1fr;
+    text-align: center;
+  }
+  .project-image-container,
+  .project-content {
+    grid-column: 1;
+  }
+
+  /* Title + badge: center and allow wrapping so nothing drifts right */
   .project-header {
     justify-content: center;
+    flex-wrap: wrap;
+    gap: 0.6rem;
   }
-}
-
-@media (max-width: 768px) {
-  main#main-content {
-    padding: 2rem 6vw;
+  .project-header h3 {
+    width: 100%;
+    text-align: center;
   }
-
-  .section-header h2 {
-    font-size: 2.8rem;
-  }
-
-  .projects-grid {
-    grid-template-columns: 1fr;
+  .project-badge {
+    align-self: center;
   }
 
-  .featured-project {
-    padding: 2rem;
+  /* If you use the top-right category chip, center it on mobile */
+  .project-category {
+    left: 50%;
+    right: auto;
+    transform: translateX(-50%);
+    top: 0.75rem;
   }
 
+  /* Keep text from compressing to the right */
+  .project-content { align-items: center; }
+  .project-description { text-align: center; }
+
+  /* Live Demo / Source Code: stack and fill width */
   .project-actions {
+    width: 100%;
+    justify-content: center;
+    align-items: stretch;
     flex-direction: column;
+    gap: 0.75rem;
   }
-}
-
-@media (max-width: 480px) {
-  main#main-content {
-    padding: 1.5rem 8vw;
-  }
-
-  .section-header h2 {
-    font-size: 2.2rem;
+  .project-actions a,
+  .btn-primary,
+  .btn-secondary {
+    width: 100%;
+    text-align: center;
   }
 
-  .cta-section {
-    padding: 2rem 1rem;
-  }
+  /* Make tech tags 2-per-row so MongoDB and Cloudinary sit side by side */
+  .tech-stack { display: flex; flex-wrap: wrap; gap: 0.8rem; }
+  .tech-tag { flex: 1 1 calc(50% - 0.4rem); justify-content: center; } /* 2 per row */
+  /* If order matters, you can enforce it with order (optional):
+     .tech-tag[data-tech="mongodb"] { order: 10; }
+     .tech-tag[data-tech="cloudinary"] { order: 11; }
+  */
+
+  /* Cards and grids refine for phones */
+  .projects-grid { grid-template-columns: 1fr; }
+  .featured-project { padding: 1.5rem; }
+  .card-content { padding: 1.25rem 1.25rem 0.75rem; }
+  .card-footer { padding: 0 1.25rem 1.25rem; }
+  .project-category { font-size: 0.75rem; }
+  .tech-tag { font-size: 0.85rem; padding: 0.5rem 0.9rem; }
+  .mini-tech { font-size: 0.7rem; }
 }
 
 /* Focus accessibility */
@@ -490,6 +532,4 @@ main#main-content {
 }
 
 /* Smooth scroll behavior */
-html {
-  scroll-behavior: smooth;
-}
+html { scroll-behavior: smooth; }

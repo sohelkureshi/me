@@ -12,12 +12,23 @@ body {
   line-height: 1.6;
 }
 
-/* Main container */
+/* Main container — like about.css */
 main#main-content {
-  max-width: 1200px;
-  width: 100vw;
+  width: 100%;
+  padding: 2.5rem 0;           /* remove desktop inline gutters to use full width */
+  color: #111111;
+  box-sizing: border-box;
+  scroll-margin-top: 80px;
+  max-width: 180vh;
   margin: 0 auto;
-  padding: 3rem 4vw;
+}
+
+/* Add small inline padding back on smaller viewports */
+@media (max-width: 900px) {
+  main#main-content { padding-inline: 3vw; } /* logical padding for LTR/RTL */
+}
+@media (max-width: 600px) {
+  main#main-content { padding-inline: 5vw; }
 }
 
 /* Services hero section */
@@ -27,25 +38,31 @@ main#main-content {
 }
 
 .services-hero h2 {
-  font-size: 3.5rem;
-  font-weight: 900;
   color: #000000;
+  font-weight: 900;
+  font-size: 3.2rem;           /* aligned with about.css */
   margin-bottom: 1rem;
   letter-spacing: -0.02em;
   position: relative;
+  user-select: none;
+  cursor: default;
+  transition: color 0.3s ease;
 }
 
 .services-hero h2::after {
   content: '';
   position: absolute;
-  bottom: -15px;
+  bottom: -12px;
   left: 50%;
   transform: translateX(-50%);
-  width: 120px;
+  width: 80px;                 /* underline width aligned with about.css */
   height: 4px;
-  background: linear-gradient(90deg, #000000 0%, #555555 100%);
+  background: linear-gradient(90deg, #000000 0%, #333333 100%);
   border-radius: 2px;
 }
+
+.services-hero h2:hover,
+.services-hero h2:focus-within { color: #444444; }
 
 .hero-subtitle {
   font-size: 1.3rem;
@@ -58,17 +75,16 @@ main#main-content {
 .hero-stats {
   display: flex;
   justify-content: center;
-  gap: 3rem;
+  gap: clamp(1.5rem, 3vw, 3rem);
   margin-top: 3rem;
+  flex-wrap: wrap;
 }
 
-.stat-badge {
-  text-align: center;
-}
+.stat-badge { text-align: center; }
 
 .stat-number {
   display: block;
-  font-size: 2.5rem;
+  font-size: clamp(1.6rem, 2.5vw, 2.5rem);
   font-weight: 900;
   color: #000000;
   margin-bottom: 0.3rem;
@@ -85,9 +101,10 @@ main#main-content {
 /* Services container */
 .services-container {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-  gap: 2.5rem;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); /* intrinsic grid */
+  gap: clamp(1.5rem, 2.5vw, 2.5rem);
   margin-bottom: 5rem;
+  
 }
 
 /* Individual service items */
@@ -95,12 +112,13 @@ main#main-content {
   background-color: #ffffff;
   border: 1px solid #e8e8e8;
   border-radius: 20px;
-  padding: 3rem 2.5rem;
+  padding: clamp(1.5rem, 3vw, 3rem) clamp(1.25rem, 2.5vw, 2.5rem);
   text-align: center;
   transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
   cursor: default;
   position: relative;
   overflow: hidden;
+  animation: fadeInUp 0.6s ease forwards;
 }
 
 .service-item.featured {
@@ -111,19 +129,15 @@ main#main-content {
 .service-item::before {
   content: '';
   position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 6px;
+  top: 0; left: 0;
+  width: 100%; height: 6px;
   background: linear-gradient(90deg, #000000 0%, #333333 100%);
   transform: scaleX(0);
   transition: transform 0.4s ease;
 }
 
 .service-item:hover::before,
-.service-item:focus-within::before {
-  transform: scaleX(1);
-}
+.service-item:focus-within::before { transform: scaleX(1); }
 
 .service-item:hover,
 .service-item:focus-within {
@@ -133,9 +147,7 @@ main#main-content {
   outline: none;
 }
 
-.service-item.featured:hover {
-  transform: translateY(-10px) scale(1.05);
-}
+.service-item.featured:hover { transform: translateY(-10px) scale(1.05); }
 
 /* Service badges */
 .service-badge {
@@ -154,8 +166,8 @@ main#main-content {
 
 /* Service icons */
 .service-icon {
-  width: 90px;
-  height: 90px;
+  width: clamp(72px, 10vw, 90px);
+  height: clamp(72px, 10vw, 90px);
   margin: 0 auto 2rem;
   background-color: #f8f8f8;
   border-radius: 50%;
@@ -166,7 +178,7 @@ main#main-content {
 }
 
 .service-icon i {
-  font-size: 2.5rem;
+  font-size: clamp(1.8rem, 3vw, 2.5rem);
   color: #333333;
   transition: all 0.4s ease;
 }
@@ -185,7 +197,7 @@ main#main-content {
 
 /* Service titles */
 .service-item h3 {
-  font-size: 1.6rem;
+  font-size: clamp(1.25rem, 2vw, 1.6rem);
   font-weight: 800;
   color: #000000;
   margin-bottom: 1.5rem;
@@ -244,13 +256,13 @@ main#main-content {
 .process-section {
   background: linear-gradient(135deg, #f8f8f8 0%, #f0f0f0 100%);
   border-radius: 25px;
-  padding: 4rem 3rem;
+  padding: clamp(2rem, 4vw, 4rem) clamp(1.5rem, 3vw, 3rem);
   margin-bottom: 4rem;
   text-align: center;
 }
 
 .process-section h3 {
-  font-size: 2.5rem;
+  font-size: clamp(1.6rem, 3vw, 2.5rem);
   font-weight: 800;
   color: #000000;
   margin-bottom: 3rem;
@@ -258,8 +270,8 @@ main#main-content {
 
 .process-steps {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-  gap: 2rem;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); /* intrinsic grid */
+  gap: clamp(1rem, 2vw, 2rem);
 }
 
 .process-step {
@@ -276,14 +288,14 @@ main#main-content {
 }
 
 .step-number {
-  font-size: 2.5rem;
+  font-size: clamp(1.6rem, 3vw, 2.5rem);
   font-weight: 900;
   color: #000000;
   margin-bottom: 1rem;
 }
 
 .step-content h4 {
-  font-size: 1.3rem;
+  font-size: clamp(1.05rem, 2vw, 1.3rem);
   font-weight: 700;
   color: #000000;
   margin-bottom: 0.8rem;
@@ -298,7 +310,7 @@ main#main-content {
 .testimonial-section {
   background: #ffffff;
   border-radius: 20px;
-  padding: 3rem;
+  padding: clamp(1.5rem, 3vw, 3rem);
   margin-bottom: 4rem;
   box-shadow: 0 8px 30px rgba(0, 0, 0, 0.06);
   border: 1px solid #e8e8e8;
@@ -306,7 +318,7 @@ main#main-content {
 }
 
 .testimonial i {
-  font-size: 3rem;
+  font-size: clamp(2rem, 3vw, 3rem);
   color: #333333;
   margin-bottom: 1.5rem;
 }
@@ -328,35 +340,29 @@ main#main-content {
   gap: 0.3rem;
 }
 
-.author-name {
-  font-weight: 700;
-  color: #000000;
-}
-
-.author-role {
-  font-size: 0.9rem;
-  color: #666666;
-}
+.author-name { font-weight: 700; color: #000000; }
+.author-role { font-size: 0.9rem; color: #666666; }
 
 /* Services CTA */
 .services-cta {
-  background: #000000;
+  background: #373636;
   color: #ffffff;
   border-radius: 25px;
-  padding: 4rem 3rem;
+  padding: clamp(2rem, 4vw, 4rem) clamp(1.5rem, 3vw, 3rem);
   text-align: center;
 }
 
 .cta-content h3 {
-  font-size: 2.5rem;
+  font-size: clamp(1.6rem, 3vw, 2.5rem);
   font-weight: 800;
   margin-bottom: 1rem;
+  color: #f4f7f5;
 }
 
 .cta-content p {
   font-size: 1.2rem;
   margin-bottom: 3rem;
-   color: #f4f7f5;
+  color: #f4f7f5;
   opacity: 0.9;
 }
 
@@ -365,6 +371,7 @@ main#main-content {
   justify-content: center;
   gap: 1.5rem;
   margin-bottom: 3rem;
+  flex-wrap: wrap;
 }
 
 .cta-primary, .cta-secondary {
@@ -381,34 +388,23 @@ main#main-content {
   letter-spacing: 0.05em;
 }
 
-.cta-primary {
-  background: #ffffff;
-  color: #000000;
-}
-
+.cta-primary { background: #ffffff; color: #000000; }
 .cta-primary:hover {
   background: #f0f0f0;
   transform: translateY(-2px);
   box-shadow: 0 8px 25px rgba(255, 255, 255, 0.2);
 }
 
-.cta-secondary {
-  background: transparent;
-  color: #ffffff;
-  border: 2px solid #ffffff;
-}
-
-.cta-secondary:hover {
-  background: #ffffff;
-  color: #000000;
-}
+.cta-secondary { background: transparent; color: #ffffff; border: 2px solid #ffffff; }
+.cta-secondary:hover { background: #ffffff; color: #000000; }
 
 .contact-quickinfo {
   display: flex;
   justify-content: center;
-  gap: 3rem;
+  gap: clamp(1rem, 3vw, 3rem);
   border-top: 1px solid #333333;
   padding-top: 2rem;
+  flex-wrap: wrap;
 }
 
 .quick-contact {
@@ -418,66 +414,34 @@ main#main-content {
   color: #cccccc;
 }
 
-.quick-contact i {
-  font-size: 1.1rem;
-}
+.quick-contact i { font-size: 1.1rem; }
 
-/* Responsive design */
+/* Responsive design — unify breakpoints with about.css */
 @media (max-width: 900px) {
-  main#main-content {
-    padding: 2rem 6vw;
-  }
+  .services-hero h2 { font-size: clamp(2.2rem, 5vw, 3.2rem); } /* fluid type */
 
-  .services-hero h2 {
-    font-size: 2.8rem;
-  }
+  .services-container { grid-template-columns: 1fr; } /* single column */
+  .process-steps     { grid-template-columns: 1fr; } /* single column */
 
-  .hero-stats {
-    gap: 2rem;
-  }
-
-  .services-container {
-    grid-template-columns: 1fr;
-  }
-
-  .process-steps {
-    grid-template-columns: 1fr;
-  }
-
-  .cta-actions {
-    flex-direction: column;
-    align-items: center;
-  }
-
-  .contact-quickinfo {
-    flex-direction: column;
-    gap: 1rem;
-  }
+  .cta-actions { flex-direction: column; align-items: center; }
 }
 
 @media (max-width: 600px) {
-  main#main-content {
-    padding: 1.5rem 8vw;
-  }
+  .services-hero h2 { font-size: 2.5rem; }
 
-  .services-hero h2 {
-    font-size: 2.2rem;
-  }
-
-  .hero-stats {
-    flex-direction: column;
-    gap: 1.5rem;
-  }
+  .hero-stats { flex-direction: column; gap: 1.25rem; }
 
   .process-section,
   .testimonial-section,
-  .services-cta {
-    padding: 2rem;
-  }
+  .services-cta { padding: 1.5rem; }
 
-  .service-item {
-    padding: 2rem;
-  }
+  .service-item { padding: 1.5rem; }
+
+  /* Center the badge on narrow screens to prevent overflow drift */
+  .service-badge { left: 50%; right: auto; transform: translateX(-50%); top: 0.75rem; }
+
+  /* Make CTA buttons full-width for easy tapping */
+  .cta-primary, .cta-secondary { width: 100%; justify-content: center; }
 }
 
 /* Focus accessibility */
@@ -488,21 +452,15 @@ main#main-content {
 
 /* Smooth animations */
 @keyframes fadeInUp {
-  from {
-    opacity: 0;
-    transform: translateY(30px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
+  from { opacity: 0; transform: translateY(30px); }
+  to   { opacity: 1; transform: translateY(0); }
 }
 
-.service-item {
-  animation: fadeInUp 0.6s ease forwards;
-}
-
+/* Staggered reveal */
 .service-item:nth-child(1) { animation-delay: 0.1s; }
 .service-item:nth-child(2) { animation-delay: 0.2s; }
 .service-item:nth-child(3) { animation-delay: 0.3s; }
 .service-item:nth-child(4) { animation-delay: 0.4s; }
+
+/* Smooth scroll */
+html { scroll-behavior: smooth; }

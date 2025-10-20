@@ -63,8 +63,9 @@ main#main-content {
   display: grid;                  /* switch from flex to grid */
   grid-template-columns: 1fr;     /* single column to center avatar above content */
   gap: clamp(1.5rem, 3vw, 4rem);
-  width: 100%;
-  margin: 0;
+  max-width: 1200px;
+  margin: 0 auto;
+  
 }
 
 /* Photo container centered in its grid cell */
