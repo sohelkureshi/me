@@ -4,25 +4,24 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Sohel Kureshi | Portfolio</title>
-   <!-- Favicon (current 64x64 PNG) -->
+
+  <!-- Favicon -->
   <link rel="icon" type="image/png" sizes="64x64" href="assets/images/favicon/icons8-portfolio-32.png" />
 
   <!-- Prevent FOUC: hide until CSS+fonts are ready -->
   <style>
-    /* Keep this before any external CSS so it applies immediately */
     html:not(.css-ready) { visibility: hidden; }
   </style>
 
-  <!-- Resource hints for external icon CSS/fonts -->
+  <!-- Resource hints -->
   <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin />
   <link rel="dns-prefetch" href="https://cdn.jsdelivr.net" />
 
-  <!-- Critical/base CSS: preload + stylesheet (preload fetch is reused by the stylesheet) -->
+  <!-- Critical/base CSS -->
   <link rel="preload" href="css/base.css" as="style" />
   <link rel="stylesheet" href="css/base.css" />
 
-  <!-- All site CSS in head (do NOT link CSS inside fetched fragments) -->
-  <!-- You have 10+ files; list them all here so styles are present before any content is shown -->
+  <!-- Page CSS -->
   <link rel="stylesheet" href="css/about.css" />
   <link rel="stylesheet" href="css/experience.css" />
   <link rel="stylesheet" href="css/projects.css" />
@@ -31,13 +30,13 @@
   <link rel="stylesheet" href="css/services.css" />
   <link rel="stylesheet" href="css/contact.css" />
   <link rel="stylesheet" href="css/resume.css" />
-  <!-- Add remaining CSS files here -->
 
-  <!-- Bootstrap Icons CSS (external); keep here so it loads before any icon renders -->
+  <!-- Bootstrap Icons -->
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" />
 
-  <!-- Optional: minimal transitions used by your loader -->
+  <!-- Minimal transitions used by your loader -->
   <style>
+    /* duplicates exist in base.css, but harmless if kept here */
     #main-content { transition: opacity 0.3s ease; min-height: 400px; }
     .loading-state { opacity: 0.5; pointer-events: none; }
     .fade-out { opacity: 0; }
@@ -48,13 +47,11 @@
   <script>
     (function () {
       function revealWhenStylesReady() {
-        // Wait for stylesheet <link> elements to finish loading
         const links = Array.from(document.querySelectorAll('link[rel="stylesheet"]'));
         const linkPromises = links.map(link => new Promise(resolve => {
-          // If the stylesheet is already parsed (sheet exists), resolve immediately
           if (link.sheet) return resolve();
           link.addEventListener('load', resolve, { once: true });
-          link.addEventListener('error', resolve, { once: true }); // fail open
+          link.addEventListener('error', resolve, { once: true });
         }));
         const fontsReady = (document.fonts && document.fonts.ready) ? document.fonts.ready : Promise.resolve();
         Promise.all([...linkPromises, fontsReady]).then(() => {
@@ -69,10 +66,7 @@
     })();
   </script>
 
-  <!-- No-JS fallback so the page is visible if JS is disabled -->
-  <noscript>
-    <style>html { visibility: visible; }</style>
-  </noscript>
+  <noscript><style>html { visibility: visible; }</style></noscript>
 </head>
 <body>
   <nav>
@@ -112,14 +106,24 @@
     const navMenu = document.getElementById('nav-menu');
 
     navToggle.addEventListener('click', () => {
-      navMenu.classList.toggle('show-menu');
+      const willShow = !navMenu.classList.contains('show-menu');
+      navMenu.classList.toggle('show-menu', willShow);
+
+      // Lock/unlock body scroll without breaking sticky
+      document.body.classList.toggle('menu-open', willShow);
 
       // Toggle hamburger icon
       const icon = navToggle.querySelector('i');
-      if (navMenu.classList.contains('show-menu')) {
-        icon.className = 'bi bi-x';
-      } else {
-        icon.className = 'bi bi-list';
+      if (icon) icon.className = willShow ? 'bi bi-x' : 'bi bi-list';
+    });
+
+    // Close mobile menu when clicking outside
+    document.addEventListener('click', (e) => {
+      if (!navToggle.contains(e.target) && !navMenu.contains(e.target)) {
+        navMenu.classList.remove('show-menu');
+        document.body.classList.remove('menu-open');
+        const icon = navToggle.querySelector('i');
+        if (icon) icon.className = 'bi bi-list';
       }
     });
 
@@ -129,20 +133,15 @@
 
     // Smooth page loading function with anti-glitch measures
     function loadPage(page, linkElement) {
-      // Prevent multiple simultaneous requests
       if (isLoading || currentPage === page) return;
 
       isLoading = true;
       currentPage = page;
 
-      // Add loading state
       mainContent.classList.add('loading-state');
-
-      // Fade out current content
       mainContent.classList.remove('fade-in');
       mainContent.classList.add('fade-out');
 
-      // Wait for fade-out transition, then load new content
       setTimeout(() => {
         fetch(page)
           .then(response => {
@@ -150,28 +149,23 @@
             return response.text();
           })
           .then(data => {
-            // Replace content
             mainContent.innerHTML = data;
             window.scrollTo(0, 0);
 
-            // Update active link
             links.forEach(link => link.classList.remove('active'));
             if (linkElement) linkElement.classList.add('active');
 
             // Close mobile menu after selection
             navMenu.classList.remove('show-menu');
-            if (navToggle.querySelector('i')) {
-              navToggle.querySelector('i').className = 'bi bi-list';
-            }
+            document.body.classList.remove('menu-open');
+            const icon = navToggle.querySelector('i');
+            if (icon) icon.className = 'bi bi-list';
 
-            // Fade in new content
             mainContent.classList.remove('fade-out', 'loading-state');
             mainContent.classList.add('fade-in');
 
-            // Re-attach event listeners to dynamically loaded content
             attachDynamicEventListeners();
 
-            // Reset loading state
             isLoading = false;
           })
           .catch(() => {
@@ -181,14 +175,14 @@
             isLoading = false;
             currentPage = '';
           });
-      }, 150); // Wait for fade-out transition
+      }, 150);
     }
 
     // Function to attach event listeners to dynamically loaded content
     function attachDynamicEventListeners() {
       const dynamicLinks = document.querySelectorAll('[data-page]');
       dynamicLinks.forEach(link => {
-        link.removeEventListener('click', handleDynamicClick); // Prevent duplicate listeners
+        link.removeEventListener('click', handleDynamicClick);
         link.addEventListener('click', handleDynamicClick);
       });
     }
@@ -198,7 +192,7 @@
       e.preventDefault();
       const page = this.getAttribute('data-page');
       if (page && !isLoading) {
-        loadPage(page, null); // Don't update nav active state for internal links
+        loadPage(page, null);
       }
     }
 
@@ -216,7 +210,6 @@
     // Load about.html immediately as default page
     window.addEventListener('DOMContentLoaded', () => {
       const aboutLink = document.querySelector('a[data-page="about.html"]');
-      // Set initial state without fade effects for first load
       isLoading = true;
       currentPage = 'about.html';
 
@@ -227,7 +220,7 @@
         })
         .then(data => {
           mainContent.innerHTML = data;
-          aboutLink.classList.add('active');
+          if (aboutLink) aboutLink.classList.add('active');
           attachDynamicEventListeners();
           isLoading = false;
         })
@@ -236,16 +229,6 @@
           isLoading = false;
           currentPage = '';
         });
-    });
-
-    // Close mobile menu when clicking outside
-    document.addEventListener('click', (e) => {
-      if (!navToggle.contains(e.target) && !navMenu.contains(e.target)) {
-        navMenu.classList.remove('show-menu');
-        if (navToggle.querySelector('i')) {
-          navToggle.querySelector('i').className = 'bi bi-list';
-        }
-      }
     });
 
     // Prevent rapid clicking

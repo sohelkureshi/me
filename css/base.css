@@ -5,6 +5,20 @@
   padding: 0;
 }
 
+:root {
+  /* Keep header height consistent for layout offsets */
+  --nav-height: 64px;
+}
+
+html, body {
+  /* Do not constrain overflow on ancestors of sticky header */
+  overflow: visible;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
 body {
   font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
   background-color: #ffffff;
@@ -16,6 +30,7 @@ body {
   transition: background-color 0.3s ease, color 0.3s ease;
 }
 
+/* Links */
 a {
   color: #000000;
   text-decoration: none;
@@ -28,14 +43,15 @@ a:focus {
   outline: none;
 }
 
-/* Navigation */
+/* Navigation (sticky header) */
 nav {
+  position: sticky;       /* ensure sticky */
+  top: 0;                 /* threshold required */
+  z-index: 1100;          /* ensure above menus/content */
   background-color: #111111;
   padding: 1rem 0;
+  min-height: var(--nav-height);
   box-shadow: 0 2px 5px rgba(0, 0, 0, 0.15);
-  position: sticky;
-  top: 0;
-  z-index: 1000; /* keep it above page content */
 }
 
 /* Mobile hamburger toggle */
@@ -52,7 +68,7 @@ nav {
   right: 1.5rem;
   transform: translateY(-50%);
   transition: color 0.3s ease;
-  z-index: 1001;
+  z-index: 1200; /* above nav-menu */
 }
 
 .nav-toggle:hover {
@@ -108,85 +124,14 @@ footer {
 #main-content {
   flex: 1;
   padding: 2rem;
-}
-
-/* Responsive design for mobile */
-@media (max-width: 768px) {
-  /* Show hamburger menu */
-  .nav-toggle {
-    display: block;
-  }
-  
-  /* Hide menu by default on mobile */
-  .nav-menu {
-    position: fixed;
-    left: -100%;
-    top: 70px;
-    flex-direction: column;
-    background-color: #111111;
-    width: 100%;
-    text-align: center;
-    transition: 0.3s;
-    box-shadow: 0 10px 27px rgba(0, 0, 0, 0.05);
-    z-index: 1000;
-    padding: 2rem 0;
-  }
-  
-  /* Show menu when active */
-  .nav-menu.show-menu {
-    left: 0;
-  }
-  
-  /* Mobile menu items */
-  .nav-menu li {
-    margin: 0.5rem 0;
-  }
-  
-  .nav-menu li a {
-    padding: 1rem 2rem;
-    font-size: 1.1rem;
-    border-radius: 0;
-    width: 100%;
-    transition: background-color 0.3s ease, padding-left 0.3s ease;
-  }
-  
-  .nav-menu li a:hover,
-  .nav-menu li a:focus {
-    background-color: #333333;
-    padding-left: 3rem;
-  }
-  
-  .nav-menu li a.active {
-    background-color: #555555;
-    border-left: 4px solid #ffffff;
-  }
-  
-  /* Adjust main content padding for mobile */
-  #main-content {
-    padding: 1rem;
-  }
-}
-
-/* Smooth scrolling */
-html {
-  scroll-behavior: smooth;
-}
-
-/* Loading animation for better UX */
-@keyframes fadeIn {
-  from {
-    opacity: 0;
-    transform: translateY(20px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
-
-#main-content {
+  transition: opacity 0.3s ease;
+  min-height: 400px;
   animation: fadeIn 0.3s ease;
 }
+
+.loading-state { opacity: 0.5; pointer-events: none; }
+.fade-out { opacity: 0; }
+.fade-in { opacity: 1; }
 
 /* Focus accessibility improvements */
 .nav-toggle:focus,
@@ -195,9 +140,83 @@ html {
   outline-offset: 2px;
 }
 
-/* Prevent body scroll when mobile menu is open */
+/* Prevent body scroll when mobile menu is open (without breaking sticky) */
 body.menu-open {
-  overflow: hidden;
+  /* Use clip so we don't create a new scrolling container */
+  overflow: clip;
+}
+
+/* Fallback if overflow: clip is unsupported */
+@supports not (overflow: clip) {
+  body.menu-open {
+    position: fixed; /* lock scroll */
+    inset: 0;
+    width: 100%;
+  }
+
+  /* Ensure header remains pinned while body is fixed */
+  body.menu-open nav {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+  }
+}
+
+/* Responsive design for mobile */
+@media (max-width: 768px) {
+  .nav-toggle {
+    display: block;
+  }
+
+  /* Hide menu by default on mobile, make it an overlay panel */
+  .nav-menu {
+    position: fixed;
+    left: -100%;
+    top: var(--nav-height); /* sit below header */
+    flex-direction: column;
+    background-color: #111111;
+    width: 100%;
+    text-align: center;
+    transition: left 0.3s ease;
+    box-shadow: 0 10px 27px rgba(0, 0, 0, 0.05);
+    z-index: 1000; /* below nav */
+    padding: 2rem 0;
+  }
+
+  /* Show menu when active */
+  .nav-menu.show-menu {
+    left: 0;
+  }
+
+  /* Mobile menu items */
+  .nav-menu li {
+    margin: 0.5rem 0;
+  }
+
+  .nav-menu li a {
+    padding: 1rem 2rem;
+    font-size: 1.1rem;
+    border-radius: 0;
+    width: 100%;
+    transition: background-color 0.3s ease, padding-left 0.3s ease;
+  }
+
+  .nav-menu li a:hover,
+  .nav-menu li a:focus {
+    background-color: #333333;
+    padding-left: 3rem;
+  }
+
+  .nav-menu li a.active {
+    background-color: #555555;
+    border-left: 4px solid #ffffff;
+  }
+
+  /* Adjust main content padding for mobile */
+  #main-content {
+    padding: 1rem;
+  }
 }
 
 /* Additional mobile optimizations */
@@ -205,21 +224,25 @@ body.menu-open {
   nav {
     padding: 0.8rem 0;
   }
-  
+
   .nav-toggle {
     right: 1rem;
     font-size: 1.6rem;
   }
-  
+
   .nav-menu {
-    top: 60px;
+    top: var(--nav-height);
     padding: 1.5rem 0;
   }
-  
+
   .nav-menu li a {
     font-size: 1rem;
     padding: 0.8rem 1.5rem;
   }
-  
+}
 
+/* Smooth loading animation */
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(20px); }
+  to   { opacity: 1; transform: translateY(0); }
 }
