@@ -12,7 +12,7 @@
 
 html, body {
   /* Do not constrain overflow on ancestors of sticky header */
-  overflow: visible;
+  overflow-x: visible !important;
 }
 
 html {
@@ -47,7 +47,7 @@ a:focus {
 nav {
   position: sticky;       /* ensure sticky */
   top: 0;                 /* threshold required */
-  z-index: 1100;          /* ensure above menus/content */
+  z-index: 11100;          /* ensure above menus/content */
   background-color: #111111;
   padding: 1rem 0;
   min-height: var(--nav-height);

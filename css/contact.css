@@ -14,6 +14,10 @@ body {
   line-height: 1.6;
 }
 
+html, body {
+  overflow-x: visible !important; /* undo hidden that kills sticky */ /* [web:20][web:4] */
+}
+
 /* Main container — aligned with services */
 main#main-content {
   width: 100%;
@@ -369,5 +373,3 @@ main#main-content {
   .promise-item { justify-content: center; }
 }
 
-/* Optional guard against any residual horizontal scroll */
-html, body { overflow-x: hidden; }
