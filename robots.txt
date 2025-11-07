@@ -1,6 +1,4 @@
-# robots.txt for https://sohelkureshi.github.io/me/
-
 User-agent: *
 Allow: /
-
 Sitemap: https://sohelkureshi.github.io/me/sitemap.xml
+Icon: https://sohelkureshi.github.io/me/developer_favicon.png
