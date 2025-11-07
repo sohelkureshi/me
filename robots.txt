@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
-Sitemap: https://sohelkureshi.github.io/me/sitemap.xml
+Sitemap: https://sohelkureshi.github.io/me/sitemap_index.xml
 Icon: https://sohelkureshi.github.io/me/developer_favicon.png
